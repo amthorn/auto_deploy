@@ -9,7 +9,7 @@ RUN apt-get -y install cron make git vim
 
 # Install Python 3.6.6
 RUN apt-get install -y python3-pip
-RUN pip3 install jinja2 docker-compose
+RUN pip3 install jinja2
 
 # Add crontab file in the cron directory
 ADD crontab.template crontab.template

@@ -6,10 +6,10 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - COMMAND=cd /app/ && /deploy/pull_and_deploy.sh
+        - COMMAND=cd /app/ghlabel_bot && /deploy/pull_and_deploy.sh
         - CRON=* * * * *
     restart: always
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock   # docker socket
-    - ./:/app
+    - /root/:/app
     - $HOME/.ssh/id_rsa:/root/.ssh/id_rsa  # ssh key
