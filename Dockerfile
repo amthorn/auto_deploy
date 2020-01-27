@@ -3,9 +3,6 @@ MAINTAINER avthorn@cisco.com
 ARG COMMAND
 ARG CRON
 
-RUN echo ${COMMAND}
-RUN echo ${CRON}
-
 # Install Cron
 RUN apt-get update
 RUN apt-get -y install cron make git vim
@@ -16,19 +13,18 @@ RUN pip3 install jinja2
 
 # Add crontab file in the cron directory
 ADD crontab.template crontab.template
-ADD inject.py /app/inject.py
-RUN python3 /app/inject.py "/etc/cron.d/hello-cron" "${CRON}" "${COMMAND}"
-RUN cat "/etc/cron.d/hello-cron"
+ADD inject.py /deploy/inject.py
+RUN python3 /deploy/inject.py "/etc/cron.d/hello-cron" "${CRON}" "${COMMAND}"
 
 # Add deployment files
-ADD deploy.sh /app/deploy.sh
-ADD pull_and_deploy.sh /app/pull_and_deploy.sh
+ADD deploy.sh /deploy/deploy.sh
+ADD pull_and_deploy.sh /deploy/pull_and_deploy.sh
 
 # Give execution rights on the cron job
 RUN chmod 0644 /etc/cron.d/hello-cron
 
 # Give execution rights to deployment files
-RUN chmod +x /app/deploy.sh /app/pull_and_deploy.sh
+RUN chmod +x /deploy/deploy.sh /deploy/pull_and_deploy.sh
 
 # Apply to crontab
 RUN crontab /etc/cron.d/hello-cron
