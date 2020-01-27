@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - COMMAND=cd /app/ && ./pull_and_deploy.sh
+        - COMMAND=cd /app/ && /deploy/pull_and_deploy.sh
         - CRON=* * * * *
     restart: always
     volumes:
